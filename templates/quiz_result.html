@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <style>
+        body {
+            background-color: #3498db; /* Blue background color */
+            color: #ffffff; /* White text color */
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .result-container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .answer-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .answer-list li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            background-color: #2ecc71; /* Green background color */
+            color: #ffffff; /* White text color */
+            padding: 10px 20px; /* Padding for the button */
+            text-decoration: none; /* Remove underline from the text */
+            border-radius: 5px; /* Optional: Add border radius for rounded corners */
+            display: inline-block; /* Make the link a block element */
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Quiz Result</h1>
+        <div class="score">
+            Your Score: {{ score }}/{{ total }}
+        </div>
+        <ul class="answer-list">
+            {% for question, user_answer in answers.items() %}
+                <li>
+                    <strong>Question:</strong> {{ question }}<br>
+                    <strong>Your Answer:</strong> {{ user_answer }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/">Return to Landing Page</a>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Result</title>
+    <style>
+        body {
+            background-color: #3498db; /* Blue background color */
+            color: #ffffff; /* White text color */
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .result-container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .back-to-landing {
+            margin-top: 20px;
+            background-color: #2ecc71; /* Green background color */
+            color: #ffffff; /* White text color */
+            padding: 10px 20px; /* Padding for the button */
+            text-decoration: none; /* Remove underline from the text */
+            border-radius: 5px; /* Optional: Add border radius for rounded corners */
+            display: inline-block; /* Make the button a block element */
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Flashcard Result</h1>
+        <div class="score">
+            Score: {{ score }} / {{ total }}
+        </div>
+        <a class="back-to-landing" href="/">Back to Landing Page</a>
+    </div>
+</body>
+</html>

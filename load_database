@@ -1,0 +1,67 @@
+import sqlite3
+import csv
+import os
+
+def import_csv_to_database(input_filename):
+    try:
+        # Connect to the SQLite database
+        with sqlite3.connect("quiz_database.db") as connection:
+            cursor = connection.cursor()
+
+            # Check if the 'quiz' table exists
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='quiz'")
+            quiz_table_exists = cursor.fetchone()
+
+            # Create the 'quiz' table if it doesn't exist
+            if not quiz_table_exists:
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS quiz (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        question TEXT NOT NULL,
+                        answer TEXT NOT NULL,
+                        category TEXT NOT NULL
+                    )
+                ''')
+
+            # Check if the 'categories' table exists
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='categories'")
+            categories_table_exists = cursor.fetchone()
+
+            # Create the 'categories' table if it doesn't exist
+            if not categories_table_exists:
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS categories (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        category TEXT NOT NULL
+                    )
+                ''')
+
+            # Read data from CSV file
+            with open(input_filename, 'r') as csv_file:
+                csv_reader = csv.reader(csv_file)
+                next(csv_reader)  # Skip the header row
+
+                for row in csv_reader:
+                    question, answer, category = map(str.strip, row)
+
+                    # Insert data into the 'quiz' table
+                    cursor.execute('''
+                        INSERT INTO quiz (question, answer, category) VALUES (?, ?, ?)
+                    ''', (question, answer, category))
+
+                    # Insert the category into the 'categories' table if it doesn't exist
+                    cursor.execute('''
+                        INSERT OR IGNORE INTO categories (category) VALUES (?)
+                    ''', (category,))
+
+            # Commit the changes
+            connection.commit()
+
+            print(f"Data imported from {input_filename} to the database successfully.")
+
+    except Exception as e:
+        print(f"Error importing data from CSV to the database: {e}")
+
+if __name__ == '__main__':
+    input_filename = '/home/rob/Documents/projects/jeopardy/jeopardy_data.csv'
+    import_csv_to_database(input_filename)

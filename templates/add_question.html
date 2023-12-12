@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <style>
+        body {
+            background-color: #3498db;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .add-question-container {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select {
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="add-question-container">
+        <h1>Add Question</h1>
+        <form method="post" action="/add_question">
+            <label for="question">Question:</label>
+            <input type="text" id="question" name="question" required>
+            <br>
+            <label for="answer">Answer:</label>
+            <input type="text" id="answer" name="answer" required>
+            <br>
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                {% if categories %}
+                    <option value="" selected disabled>Select or Add Category</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="" selected disabled>Add Category</option>
+                {% endif %}
+            </select>
+            <br>
+            <label for="new_category">New Category:</label>
+            <input type="text" id="new_category" name="new_category">
+            <br>
+            <button type="submit">Add Question</button>
+            <button type="submit" name="add_another">Add Another Question</button>
+        </form>
+    </div>
+</body>
+</html>
